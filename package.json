@@ -1,0 +1,38 @@
+{
+  "name": "rts-table",
+  "version": "0.0.1",
+  "description": "Flexible table component built with Typescript and React.",
+  "main": "index.js",
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "build:cjs": "tsc",
+    "build:es6": "tsc -p tsconfig.es6.json",
+    "build": "run-p build:*",
+    "clean": "rimraf dist dist_stories",
+    "start": "npm run build -- --watch",
+    "build:stories": "rm -rf dist_stories && build-storybook -o dist_stories",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@storybook/addon-info": "^5.0.0",
+    "@storybook/react": "^5.0.0",
+    "@storybook/theming": "^5.0.0",
+    "@types/jest": "^24.0.9",
+    "@types/storybook__react": "^4.0.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.5",
+    "jest": "^24.3.0",
+    "react-docgen-typescript-webpack-plugin": "^1.1.0",
+    "ts-jest": "^24.0.0",
+    "typescript": "^3.3.3333"
+  },
+  "dependencies": {
+    "@emotion/core": "^10.0.7",
+    "@emotion/styled": "^10.0.7",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
+  }
+}

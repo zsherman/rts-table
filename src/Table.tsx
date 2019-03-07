@@ -11,7 +11,7 @@ import { RowCell, HeadCell } from "./Cell";
 import { Loader } from "./Loader";
 import { getPageRange } from "./utils";
 
-export interface IAppProps {
+export interface ITableProps {
   /* class names */
   containerClassName?: string;
   tableClassName?: string;
@@ -42,7 +42,7 @@ export interface IAppProps {
   showHeader: boolean;
 }
 
-export interface IAppState {
+export interface ITableState {
   currentPage: number;
 }
 
@@ -58,10 +58,10 @@ const defaultProps = {
   isLoading: false,
 };
 
-export class Table extends React.Component<IAppProps, IAppState> {
+export class Table extends React.Component<ITableProps, ITableState> {
   static defaultProps = defaultProps;
 
-  state: IAppState = {
+  state: ITableState = {
     currentPage: 1,
   };
 

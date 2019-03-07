@@ -23,8 +23,12 @@
     "postversion": "git push && git push --tags",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Zach Sherman",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zsherman/rts-table.git"
+  },
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@storybook/addon-info": "^5.0.0",

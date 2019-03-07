@@ -36,7 +36,7 @@ export const RowCell: React.FunctionComponent<IRowCellProps> = ({
   accessor,
   renderer,
   style = {},
-  className
+  className,
 }) => {
   // If there is an accessor, use that value otherwise pass the whole datum
   const value = accessor ? datum[accessor] : datum;
@@ -62,7 +62,7 @@ export const HeadCell: React.FunctionComponent<IHeadCellProps> = ({
   accessor,
   sortBy,
   sortDesc,
-  onSortChange
+  onSortChange,
 }) => {
   const sort = () => {
     if (onSortChange && accessor) {

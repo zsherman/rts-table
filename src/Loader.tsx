@@ -8,14 +8,7 @@ interface ILoaderProps {
 const LoadRow: React.FunctionComponent<ILoaderProps> = ({ style }) => {
   const random = Math.random() * (1 - 0.7) + 0.7;
   return (
-    <ContentLoader
-      height={40}
-      width={1060}
-      speed={2}
-      primaryColor="#d9d9d9"
-      secondaryColor="#ecebeb"
-      style={style}
-    >
+    <ContentLoader height={40} width={1060} speed={2} primaryColor="#d9d9d9" secondaryColor="#ecebeb" style={style}>
       <rect x="34" y="13" rx="6" ry="6" width={200 * random} height="12" />
       <rect x="633" y="13" rx="6" ry="6" width={23 * random} height="12" />
       <rect x="653" y="13" rx="6" ry="6" width={78 * random} height="12" />
@@ -38,11 +31,11 @@ export const Loader = () => (
               key={i}
               style={{
                 opacity: Math.min(parseFloat(Number(2 / i).toFixed(1)), 1),
-                listStyle: "none"
+                listStyle: "none",
               }}
             />
           )
-        )
+        ),
       )}
   </React.Fragment>
 );

@@ -2,7 +2,10 @@
   "name": "rts-table",
   "version": "0.0.1",
   "description": "Flexible table component built with Typescript and React.",
-  "main": "index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es6/index.js",
+  "types": "dist/es6/index.d.ts",
+  "files": ["build/**/*"],
   "scripts": {
     "storybook": "start-storybook -p 9001 -c .storybook",
     "build:cjs": "tsc",
@@ -11,6 +14,13 @@
     "clean": "rimraf dist dist_stories",
     "start": "npm run build -- --watch",
     "build:stories": "rm -rf dist_stories && build-storybook -o dist_stories",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "preversion": "npm run lint",
+    "prepublishOnly": "npm test && npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -25,8 +35,11 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
     "jest": "^24.3.0",
+    "prettier": "^1.16.4",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "ts-jest": "^24.0.0",
+    "tslint": "^5.13.1",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3333"
   },
   "dependencies": {

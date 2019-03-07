@@ -55,25 +55,18 @@ const defaultProps = {
   showPagination: true,
   columns: [],
   data: [],
-  isLoading: false
+  isLoading: false,
 };
 
 export class Table extends React.Component<IAppProps, IAppState> {
   static defaultProps = defaultProps;
 
   state: IAppState = {
-    currentPage: 1
+    currentPage: 1,
   };
 
   public renderHeaders() {
-    const {
-      columns,
-      headClassName,
-      headCellClassName,
-      sortDesc,
-      sortBy,
-      onSortChange
-    } = this.props;
+    const { columns, headClassName, headCellClassName, sortDesc, sortBy, onSortChange } = this.props;
     return (
       <tr className={headClassName}>
         {columns.map((c, i) => (
@@ -93,14 +86,7 @@ export class Table extends React.Component<IAppProps, IAppState> {
   }
 
   public renderRows() {
-    const {
-      columns,
-      data,
-      pageSize,
-      currentPage,
-      rowClassName,
-      rowCellClassName
-    } = this.props;
+    const { columns, data, pageSize, currentPage, rowClassName, rowCellClassName } = this.props;
 
     const range = getPageRange(currentPage, pageSize, data.length);
     const window = data.slice(range[0], range[1] + 1);
@@ -108,12 +94,7 @@ export class Table extends React.Component<IAppProps, IAppState> {
     return window.map((d: any, i: number) => (
       <tr key={`row-${i}`} className={rowClassName}>
         {columns.map((c, idx) => (
-          <RowCell
-            key={`cell-${idx}`}
-            {...c}
-            datum={d}
-            className={rowCellClassName}
-          />
+          <RowCell key={`cell-${idx}`} {...c} datum={d} className={rowCellClassName} />
         ))}
       </tr>
     ));
@@ -127,8 +108,7 @@ export class Table extends React.Component<IAppProps, IAppState> {
   public incrementPage = () => {
     const { onPageChange, currentPage } = this.props;
 
-    const nextPage =
-      currentPage !== this.pageCount ? currentPage + 1 : currentPage;
+    const nextPage = currentPage !== this.pageCount ? currentPage + 1 : currentPage;
     const pageChanged = nextPage !== currentPage;
 
     if (pageChanged && onPageChange !== undefined) {
@@ -178,18 +158,10 @@ export class Table extends React.Component<IAppProps, IAppState> {
   }
 
   public render() {
-    const {
-      showHeader,
-      isLoading,
-      tableClassName,
-      tableStyle,
-      containerStyle
-    } = this.props;
+    const { showHeader, isLoading, tableClassName, tableStyle, containerStyle } = this.props;
 
     if (isLoading) {
-      return (
-        <Container style={containerStyle}>{this.renderLoading()}</Container>
-      );
+      return <Container style={containerStyle}>{this.renderLoading()}</Container>;
     }
 
     return (

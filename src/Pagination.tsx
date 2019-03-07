@@ -37,7 +37,7 @@ export const Pagination: React.FunctionComponent<IPaginationProps> = ({
   pageCount,
   onNextPage,
   onPrevPage,
-  onPageClick
+  onPageClick,
 }) => {
   const showPrev = pageCount > 1;
   const showNext = pageCount > 1;
@@ -47,11 +47,7 @@ export const Pagination: React.FunctionComponent<IPaginationProps> = ({
     <Container>
       {showPrev && <span onClick={onPrevPage}>Previous</span>}
       {pages.map((p: number) => (
-        <Page
-          key={`page-${p}`}
-          selected={currentPage === p}
-          onClick={() => onPageClick(p)}
-        >
+        <Page key={`page-${p}`} selected={currentPage === p} onClick={() => onPageClick(p)}>
           {p}
         </Page>
       ))}

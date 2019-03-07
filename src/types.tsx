@@ -4,3 +4,7 @@ export interface Column {
   renderer?: React.ComponentType<any>;
   style?: React.CSSProperties;
 }
+
+export interface LoaderProps {
+  isLoading: boolean;
+}

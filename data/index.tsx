@@ -11,7 +11,7 @@ const messages = [
 ];
 const levels = ["info", "error", "warn", "debug", "fatal"];
 
-export const data = new Array(20).fill(null).map(() => ({
+export const data = new Array(50).fill(null).map(() => ({
   dt: new Date().toISOString(),
   level: levels[Math.floor(Math.random() * levels.length)],
   message: messages[Math.floor(Math.random() * messages.length)],

@@ -8,6 +8,7 @@ import { Column } from "./types";
 import { Container } from "./Container";
 import { Pagination } from "./Pagination";
 import { RowCell, HeadCell } from "./Cell";
+import { Loader } from "./Loader";
 import { getPageRange } from "./utils";
 
 export interface IAppProps {
@@ -18,6 +19,9 @@ export interface IAppProps {
   rowCellClassName?: string;
   headClassName?: string;
   headCellClassName?: string;
+  /* custom styles */
+  tableStyle?: React.CSSProperties;
+  containerStyle?: React.CSSProperties;
   /* data */
   columns: Column[];
   data: Array<any>;
@@ -26,11 +30,16 @@ export interface IAppProps {
   currentPage: number;
   /* handlers */
   onPageChange?: (page: number) => any;
+  onSortChange?: (field: string, sortDesc: boolean) => any;
   /* components */
-  showPagination: boolean;
-  showHeader: boolean;
+  loader?: React.FunctionComponent<any>;
   /* behavior */
   controlled: boolean;
+  sortDesc?: boolean;
+  sortBy?: string;
+  isLoading: boolean;
+  showPagination: boolean;
+  showHeader: boolean;
 }
 
 export interface IAppState {
@@ -45,7 +54,8 @@ const defaultProps = {
   showHeader: true,
   showPagination: true,
   columns: [],
-  data: []
+  data: [],
+  isLoading: false
 };
 
 export class Table extends React.Component<IAppProps, IAppState> {
@@ -56,11 +66,25 @@ export class Table extends React.Component<IAppProps, IAppState> {
   };
 
   public renderHeaders() {
-    const { columns, headClassName, headCellClassName } = this.props;
+    const {
+      columns,
+      headClassName,
+      headCellClassName,
+      sortDesc,
+      sortBy,
+      onSortChange
+    } = this.props;
     return (
       <tr className={headClassName}>
         {columns.map((c, i) => (
-          <HeadCell key={`cell-${i}`} className={headCellClassName}>
+          <HeadCell
+            key={`cell-${i}`}
+            className={headCellClassName}
+            sortDesc={sortDesc}
+            sortBy={sortBy}
+            accessor={c.accessor}
+            onSortChange={onSortChange}
+          >
             {c.header}
           </HeadCell>
         ))}
@@ -131,7 +155,8 @@ export class Table extends React.Component<IAppProps, IAppState> {
   };
 
   public renderPagination() {
-    const { currentPage } = this.props;
+    const { currentPage, showPagination } = this.props;
+    if (showPagination === false || this.pageCount <= 1) return null;
 
     return (
       <Pagination
@@ -144,15 +169,36 @@ export class Table extends React.Component<IAppProps, IAppState> {
     );
   }
 
+  public renderLoading() {
+    const { loader: CustomLoader } = this.props;
+    if (CustomLoader) {
+      return <CustomLoader />;
+    }
+    return <Loader />;
+  }
+
   public render() {
-    const { showHeader, showPagination, tableClassName } = this.props;
+    const {
+      showHeader,
+      isLoading,
+      tableClassName,
+      tableStyle,
+      containerStyle
+    } = this.props;
+
+    if (isLoading) {
+      return (
+        <Container style={containerStyle}>{this.renderLoading()}</Container>
+      );
+    }
+
     return (
-      <Container>
-        <table className={tableClassName}>
+      <Container style={containerStyle}>
+        <table className={tableClassName} style={tableStyle}>
           {showHeader && <thead>{this.renderHeaders()}</thead>}
           <tbody>{this.renderRows()}</tbody>
         </table>
-        {showPagination && this.renderPagination()}
+        {this.renderPagination()}
       </Container>
     );
   }

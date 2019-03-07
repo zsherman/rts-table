@@ -2,11 +2,9 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 /* Example stories */
-import Basic from "../examples/Basic";
 import Controlled from "../examples/Controlled";
 
 /* Raw markup for demos */
-const BasicCode = require("!raw-loader!../examples/Basic.tsx");
 const ControlledCode = require("!raw-loader!../examples/Controlled.tsx");
 
 /* Base styles */
@@ -54,24 +52,13 @@ const Code = props => (
   </div>
 );
 
-storiesOf("Table", module)
-  .add("Basic", () => {
-    return (
-      <div>
-        <main>
-          <Basic />
-        </main>
-        <Code>{cleanExample(BasicCode)}</Code>
-      </div>
-    );
-  })
-  .add("Controlled", () => {
-    return (
-      <div>
-        <main>
-          <Controlled />
-        </main>
-        <Code>{cleanExample(ControlledCode)}</Code>
-      </div>
-    );
-  });
+storiesOf("Table", module).add("Controlled", () => {
+  return (
+    <div>
+      <main>
+        <Controlled />
+      </main>
+      <Code>{cleanExample(ControlledCode)}</Code>
+    </div>
+  );
+});

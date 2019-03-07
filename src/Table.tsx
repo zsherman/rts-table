@@ -11,17 +11,26 @@ import { RowCell, HeadCell } from "./Cell";
 import { getPageRange } from "./utils";
 
 export interface IAppProps {
+  /* class names */
   containerClassName?: string;
   tableClassName?: string;
   rowClassName?: string;
   rowCellClassName?: string;
   headClassName?: string;
   headCellClassName?: string;
+  /* data */
   columns: Column[];
   data: Array<any>;
-  pageSize: 10;
+  /* page */
+  pageSize: number;
+  currentPage: number;
+  /* handlers */
+  onPageChange?: (page: number) => any;
+  /* components */
   showPagination: boolean;
   showHeader: boolean;
+  /* behavior */
+  controlled: boolean;
 }
 
 export interface IAppState {
@@ -31,6 +40,8 @@ export interface IAppState {
 const defaultProps = {
   className: "rts-table",
   pageSize: 10,
+  currentPage: 1,
+  controlled: true,
   showHeader: true,
   showPagination: true,
   columns: [],
@@ -62,10 +73,11 @@ export class Table extends React.Component<IAppProps, IAppState> {
       columns,
       data,
       pageSize,
+      currentPage,
       rowClassName,
       rowCellClassName
     } = this.props;
-    const { currentPage } = this.state;
+
     const range = getPageRange(currentPage, pageSize, data.length);
     const window = data.slice(range[0], range[1] + 1);
 
@@ -89,29 +101,37 @@ export class Table extends React.Component<IAppProps, IAppState> {
   }
 
   public incrementPage = () => {
-    this.setState(state => ({
-      currentPage:
-        state.currentPage !== this.pageCount
-          ? state.currentPage + 1
-          : state.currentPage
-    }));
+    const { onPageChange, currentPage } = this.props;
+
+    const nextPage =
+      currentPage !== this.pageCount ? currentPage + 1 : currentPage;
+    const pageChanged = nextPage !== currentPage;
+
+    if (pageChanged && onPageChange !== undefined) {
+      return onPageChange(nextPage);
+    }
   };
 
   public decrementPage = () => {
-    this.setState(state => ({
-      currentPage:
-        state.currentPage !== 1 ? state.currentPage - 1 : state.currentPage
-    }));
+    const { onPageChange, currentPage } = this.props;
+    const nextPage = currentPage !== 1 ? currentPage - 1 : currentPage;
+    const pageChanged = nextPage !== currentPage;
+
+    if (pageChanged && onPageChange !== undefined) {
+      return onPageChange(nextPage);
+    }
   };
 
   public handlePageClick = (page: number) => {
-    this.setState({
-      currentPage: page
-    });
+    const { onPageChange, currentPage } = this.props;
+    const pageChanged = page !== currentPage;
+    if (pageChanged && onPageChange) {
+      return onPageChange(page);
+    }
   };
 
   public renderPagination() {
-    const { currentPage } = this.state;
+    const { currentPage } = this.props;
 
     return (
       <Pagination

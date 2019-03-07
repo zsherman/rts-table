@@ -20,6 +20,8 @@ type IPageProps = {
 const Page = styled.span<IPageProps>`
   padding: 3px 6px;
   border-radius: 3px;
+  background: ${props => (props.selected ? "blue" : "none")};
+  color: ${props => (props.selected ? "white" : "inherit")};
 `;
 
 interface IPaginationProps {

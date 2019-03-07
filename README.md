@@ -1,6 +1,6 @@
 # Usage
 
-```
+```js
 import { Table } from "rts-table";
 
 const Example = () => (

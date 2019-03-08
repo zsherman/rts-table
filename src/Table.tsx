@@ -22,6 +22,9 @@ export interface ITableProps {
   /* custom styles */
   tableStyle?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
+  rowStyle?: React.CSSProperties;
+  rowCellStyle?: React.CSSProperties;
+  headStyle?: React.CSSProperties;
   /* data */
   columns: Column[];
   data: Array<any>;
@@ -53,6 +56,7 @@ const defaultProps = {
   controlled: true,
   showHeader: true,
   showPagination: true,
+  rowCellStyle: { borderBottom: "1px solid #eee" },
   columns: [],
   data: [],
   isLoading: false,
@@ -66,7 +70,14 @@ export class Table extends React.Component<ITableProps, ITableState> {
   };
 
   public renderHeaders() {
-    const { columns, headClassName, headCellClassName, sortDesc, sortBy, onSortChange } = this.props;
+    const {
+      columns,
+      headClassName,
+      headCellClassName,
+      sortDesc,
+      sortBy,
+      onSortChange,
+    } = this.props;
     return (
       <tr className={headClassName}>
         {columns.map((c, i) => (
@@ -86,15 +97,30 @@ export class Table extends React.Component<ITableProps, ITableState> {
   }
 
   public renderRows() {
-    const { columns, data, pageSize, currentPage, rowClassName, rowCellClassName } = this.props;
+    const {
+      columns,
+      data,
+      pageSize,
+      currentPage,
+      rowClassName,
+      rowCellClassName,
+      rowStyle,
+      rowCellStyle,
+    } = this.props;
 
     const range = getPageRange(currentPage, pageSize, data.length);
     const window = data.slice(range[0], range[1] + 1);
 
     return window.map((d: any, i: number) => (
-      <tr key={`row-${i}`} className={rowClassName}>
+      <tr key={`row-${i}`} className={rowClassName} style={rowStyle}>
         {columns.map((c, idx) => (
-          <RowCell key={`cell-${idx}`} {...c} datum={d} className={rowCellClassName} />
+          <RowCell
+            key={`cell-${idx}`}
+            {...c}
+            datum={d}
+            className={rowCellClassName}
+            style={rowCellStyle}
+          />
         ))}
       </tr>
     ));
@@ -108,7 +134,8 @@ export class Table extends React.Component<ITableProps, ITableState> {
   public incrementPage = () => {
     const { onPageChange, currentPage } = this.props;
 
-    const nextPage = currentPage !== this.pageCount ? currentPage + 1 : currentPage;
+    const nextPage =
+      currentPage !== this.pageCount ? currentPage + 1 : currentPage;
     const pageChanged = nextPage !== currentPage;
 
     if (pageChanged && onPageChange !== undefined) {
@@ -158,18 +185,21 @@ export class Table extends React.Component<ITableProps, ITableState> {
   }
 
   public render() {
-    const { showHeader, isLoading, tableClassName, tableStyle, containerStyle } = this.props;
-
-    if (isLoading) {
-      return <Container style={containerStyle}>{this.renderLoading()}</Container>;
-    }
+    const {
+      showHeader,
+      isLoading,
+      tableClassName,
+      tableStyle,
+      containerStyle,
+    } = this.props;
 
     return (
       <Container style={containerStyle}>
         <table className={tableClassName} style={tableStyle}>
           {showHeader && <thead>{this.renderHeaders()}</thead>}
-          <tbody>{this.renderRows()}</tbody>
+          <tbody>{!isLoading && this.renderRows()}</tbody>
         </table>
+        {isLoading && this.renderLoading()}
         {this.renderPagination()}
       </Container>
     );

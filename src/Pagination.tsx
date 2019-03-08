@@ -20,7 +20,7 @@ type IPageProps = {
 const Page = styled.span<IPageProps>`
   padding: 3px 6px;
   border-radius: 3px;
-  background: ${props => (props.selected ? "blue" : "none")};
+  background: ${props => (props.selected ? "#1DA7FD" : "none")};
   color: ${props => (props.selected ? "white" : "inherit")};
 `;
 
@@ -47,7 +47,11 @@ export const Pagination: React.FunctionComponent<IPaginationProps> = ({
     <Container>
       {showPrev && <span onClick={onPrevPage}>Previous</span>}
       {pages.map((p: number) => (
-        <Page key={`page-${p}`} selected={currentPage === p} onClick={() => onPageClick(p)}>
+        <Page
+          key={`page-${p}`}
+          selected={currentPage === p}
+          onClick={() => onPageClick(p)}
+        >
           {p}
         </Page>
       ))}

@@ -7,7 +7,7 @@ const messages = [
   "Log line aggregate completed in 174.240143ms, source_ids_json: [342]",
   "Aggregate hybrid query routed, engine: short, boundary_iso8601: 2019-03-04T21:42:18.151100Z",
   "Log line aggregate completed in 79.620679ms, source_ids_json: [341]",
-  "Log line aggregate completed in 225.87654ms"
+  "Log line aggregate completed in 225.87654ms",
 ];
 const levels = ["info", "error", "warn", "debug", "fatal"];
 
@@ -15,29 +15,29 @@ export const data = new Array(50).fill(null).map(() => ({
   dt: new Date().toISOString(),
   level: levels[Math.floor(Math.random() * levels.length)],
   message: messages[Math.floor(Math.random() * messages.length)],
-  user: "zach@timber.io"
+  user: "zach@timber.io",
 }));
 
 export const columns: Column[] = [
   {
     header: "Date",
-    accessor: "dt"
+    accessor: "dt",
   },
   {
     header: "Level",
-    accessor: "level"
+    accessor: "level",
   },
   {
     header: "Message",
-    accessor: "message"
+    accessor: "message",
   },
   {
     header: "User",
-    accessor: "user"
+    accessor: "user",
   },
   {
     header: "",
     style: { width: 50 },
-    renderer: ({ value }) => <b>...</b>
-  }
+    renderer: ({ value }) => <b>...</b>,
+  },
 ];

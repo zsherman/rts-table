@@ -1,6 +1,14 @@
 import * as React from "react";
+import styled from "@emotion/styled";
 import { Table } from "../src";
 import { columns, data } from "../data";
+
+const Loader = styled("div")`
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 interface IAppProps {}
 
@@ -17,9 +25,9 @@ export default class IApp extends React.Component<IAppProps, IAppState> {
 
     this.state = {
       currentPage: 1,
-      isLoading: false,
+      isLoading: true,
       sortBy: "dt",
-      sortDesc: true
+      sortDesc: true,
     };
   }
 
@@ -34,7 +42,7 @@ export default class IApp extends React.Component<IAppProps, IAppState> {
   handleSortChange = (sortBy: string, sortDesc: boolean) => {
     this.setState({
       sortBy,
-      sortDesc
+      sortDesc,
     });
   };
 
@@ -51,7 +59,8 @@ export default class IApp extends React.Component<IAppProps, IAppState> {
         isLoading={isLoading}
         sortBy={sortBy}
         sortDesc={sortDesc}
-        containerStyle={{ minHeight: 500 }}
+        tableStyle={{ minHeight: 500 }}
+        loader={() => <Loader>Loading...</Loader>}
       />
     );
   }

@@ -6,10 +6,10 @@ import { Column } from "./types";
 
 /* Local */
 import { Container } from "./Container";
+import { TableHeader } from "./TableHeader";
+import { TableBody } from "./TableBody";
 import { Pagination } from "./Pagination";
-import { RowCell, HeadCell } from "./Cell";
 import { Loader } from "./Loader";
-import { getPageRange } from "./utils";
 
 export interface ITableProps {
   /* class names */
@@ -38,6 +38,7 @@ export interface ITableProps {
   loader?: React.FunctionComponent<any>;
   /* behavior */
   controlled: boolean;
+  sortable: boolean;
   sortDesc?: boolean;
   sortBy?: string;
   isLoading: boolean;
@@ -52,6 +53,7 @@ export interface ITableState {
 const defaultProps = {
   className: "rts-table",
   pageSize: 10,
+  sortable: true,
   currentPage: 1,
   controlled: true,
   showHeader: true,
@@ -68,63 +70,6 @@ export class Table extends React.Component<ITableProps, ITableState> {
   state: ITableState = {
     currentPage: 1,
   };
-
-  public renderHeaders() {
-    const {
-      columns,
-      headClassName,
-      headCellClassName,
-      sortDesc,
-      sortBy,
-      onSortChange,
-    } = this.props;
-    return (
-      <tr className={headClassName}>
-        {columns.map((c, i) => (
-          <HeadCell
-            key={`cell-${i}`}
-            className={headCellClassName}
-            sortDesc={sortDesc}
-            sortBy={sortBy}
-            accessor={c.accessor}
-            onSortChange={onSortChange}
-          >
-            {c.header}
-          </HeadCell>
-        ))}
-      </tr>
-    );
-  }
-
-  public renderRows() {
-    const {
-      columns,
-      data,
-      pageSize,
-      currentPage,
-      rowClassName,
-      rowCellClassName,
-      rowStyle,
-      rowCellStyle,
-    } = this.props;
-
-    const range = getPageRange(currentPage, pageSize, data.length);
-    const window = data.slice(range[0], range[1] + 1);
-
-    return window.map((d: any, i: number) => (
-      <tr key={`row-${i}`} className={rowClassName} style={rowStyle}>
-        {columns.map((c, idx) => (
-          <RowCell
-            key={`cell-${idx}`}
-            {...c}
-            datum={d}
-            className={rowCellClassName}
-            style={rowCellStyle}
-          />
-        ))}
-      </tr>
-    ));
-  }
 
   public get pageCount() {
     const { data, pageSize } = this.props;
@@ -161,21 +106,6 @@ export class Table extends React.Component<ITableProps, ITableState> {
     }
   };
 
-  public renderPagination() {
-    const { currentPage, showPagination } = this.props;
-    if (showPagination === false || this.pageCount <= 1) return null;
-
-    return (
-      <Pagination
-        onNextPage={this.incrementPage}
-        onPrevPage={this.decrementPage}
-        onPageClick={this.handlePageClick}
-        currentPage={currentPage}
-        pageCount={this.pageCount}
-      />
-    );
-  }
-
   public renderLoading() {
     const { loader: CustomLoader } = this.props;
     if (CustomLoader) {
@@ -186,21 +116,56 @@ export class Table extends React.Component<ITableProps, ITableState> {
 
   public render() {
     const {
-      showHeader,
+      columns,
+      data,
       isLoading,
+      showHeader,
       tableClassName,
       tableStyle,
       containerStyle,
+      headClassName,
+      headCellClassName,
+      rowClassName,
+      rowCellClassName,
+      sortDesc,
+      sortBy,
+      onSortChange,
+      currentPage,
+      pageSize,
+      showPagination,
     } = this.props;
 
     return (
       <Container style={containerStyle}>
         <table className={tableClassName} style={tableStyle}>
-          {showHeader && <thead>{this.renderHeaders()}</thead>}
-          <tbody>{!isLoading && this.renderRows()}</tbody>
+          <TableHeader
+            visible={showHeader}
+            columns={columns}
+            headClassName={headClassName}
+            headCellClassName={headCellClassName}
+            sortDesc={sortDesc}
+            sortBy={sortBy}
+            onSortChange={onSortChange}
+          />
+          <TableBody
+            visible={!isLoading}
+            columns={columns}
+            data={data}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            rowClassName={rowClassName}
+            rowCellClassName={rowCellClassName}
+          />
         </table>
         {isLoading && this.renderLoading()}
-        {this.renderPagination()}
+        <Pagination
+          visible={showPagination && this.pageCount >= 1}
+          onNextPage={this.incrementPage}
+          onPrevPage={this.decrementPage}
+          onPageClick={this.handlePageClick}
+          currentPage={currentPage}
+          pageCount={this.pageCount}
+        />
       </Container>
     );
   }

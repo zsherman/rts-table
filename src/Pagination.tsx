@@ -25,6 +25,7 @@ const Page = styled.span<IPageProps>`
 `;
 
 interface IPaginationProps {
+  visible: boolean;
   currentPage: number;
   pageCount: number;
   onNextPage: () => void;
@@ -33,12 +34,14 @@ interface IPaginationProps {
 }
 
 export const Pagination: React.FunctionComponent<IPaginationProps> = ({
+  visible,
   currentPage,
   pageCount,
   onNextPage,
   onPrevPage,
   onPageClick,
 }) => {
+  if (!visible) return null;
   const showPrev = pageCount > 1;
   const showNext = pageCount > 1;
   const pages = new Array(pageCount).fill(1).map((_, i) => i + 1);

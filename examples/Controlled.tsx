@@ -25,7 +25,7 @@ export default class IApp extends React.Component<IAppProps, IAppState> {
 
     this.state = {
       currentPage: 1,
-      isLoading: true,
+      isLoading: false,
       sortBy: "dt",
       sortDesc: true,
     };

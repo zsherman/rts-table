@@ -6,7 +6,7 @@
   "module": "dist/es6/index.js",
   "types": "dist/es6/index.d.ts",
   "files": [
-    "build/**/*"
+    "dist/**/*"
   ],
   "scripts": {
     "storybook": "start-storybook -p 9001 -c .storybook",
@@ -17,13 +17,11 @@
     "clean": "rimraf dist dist_stories",
     "start": "npm run build -- --watch",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",
-    "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
-    "preversion": "npm run lint",
-    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run format",
+    "prepublishOnly": "npm run format",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postversion": "git push && git push --tags"
   },
   "author": "Zach Sherman",
   "license": "ISC",

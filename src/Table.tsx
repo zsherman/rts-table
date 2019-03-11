@@ -11,7 +11,7 @@ import { TableBody } from "./TableBody";
 import { Pagination } from "./Pagination";
 import { Loader } from "./Loader";
 
-export interface ITableProps {
+export interface ITableProps<TData extends object> {
   /* class names */
   containerClassName?: string;
   tableClassName?: string;
@@ -26,8 +26,8 @@ export interface ITableProps {
   rowCellStyle?: React.CSSProperties;
   headStyle?: React.CSSProperties;
   /* data */
-  columns: Column[];
-  data: Array<any>;
+  columns: Column<TData>[];
+  data: TData[];
   /* page */
   pageSize: number;
   currentPage: number;
@@ -64,7 +64,10 @@ const defaultProps = {
   isLoading: false,
 };
 
-export class Table extends React.Component<ITableProps, ITableState> {
+export class Table<TData extends object> extends React.Component<
+  ITableProps<TData>,
+  ITableState
+> {
   static defaultProps = defaultProps;
 
   state: ITableState = {

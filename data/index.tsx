@@ -1,6 +1,13 @@
 import * as React from "react";
 import { Column } from "../src/types";
 
+interface IData {
+  dt: string;
+  level: string;
+  message: string;
+  user: string;
+}
+
 const messages = [
   "there was an error at line 53:12",
   "Log line aggregate completed in 94.943748ms, source_ids_json: [341], aggregate_fun: count",
@@ -18,7 +25,7 @@ export const data = new Array(50).fill(null).map(() => ({
   user: "zach@timber.io",
 }));
 
-export const columns: Column[] = [
+export const columns: Column<IData>[] = [
   {
     header: "Date",
     accessor: "dt",
@@ -37,6 +44,7 @@ export const columns: Column[] = [
   },
   {
     header: "",
+    accessor: "user",
     style: { width: 50 },
     renderer: ({ value }) => <b>...</b>,
   },

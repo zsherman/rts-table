@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Table } from "../src";
 import { columns, data } from "../data";
 
-const Loader = styled("div")`
+const Loader = styled.div`
   height: 450px;
   display: flex;
   align-items: center;

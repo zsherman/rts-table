@@ -3,9 +3,9 @@ import { Column } from "./types";
 import { RowCell } from "./Cell";
 import { getPageRange } from "./utils";
 
-interface IBodyProps {
-  columns: Column[];
-  data: Array<any>;
+interface IBodyProps<TData extends object> {
+  columns: Column<TData>[];
+  data: TData[];
   pageSize: number;
   currentPage: number;
   visible: boolean;
@@ -15,7 +15,7 @@ interface IBodyProps {
   rowCellStyle?: React.CSSProperties;
 }
 
-export const TableBody: React.FunctionComponent<IBodyProps> = ({
+export const TableBody = <TData extends object>({
   visible,
   columns,
   data,
@@ -25,7 +25,7 @@ export const TableBody: React.FunctionComponent<IBodyProps> = ({
   rowCellClassName,
   rowStyle,
   rowCellStyle,
-}) => {
+}: IBodyProps<TData> & { children?: React.ReactNode }) => {
   if (!visible) return <tbody />;
   const range = getPageRange(currentPage, pageSize, data.length);
   const window = data.slice(range[0], range[1] + 1);

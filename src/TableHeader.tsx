@@ -2,8 +2,8 @@ import * as React from "react";
 import { Column } from "./types";
 import { HeadCell } from "./Cell";
 
-interface IHeaderProps {
-  columns: Column[];
+interface IHeaderProps<TData extends object> {
+  columns: Column<TData>[];
   visible: boolean;
   headClassName?: string;
   headCellClassName?: string;
@@ -12,7 +12,7 @@ interface IHeaderProps {
   onSortChange?: (field: string, sortDesc: boolean) => any;
 }
 
-export const TableHeader: React.FunctionComponent<IHeaderProps> = ({
+export const TableHeader = <TData extends object>({
   visible,
   columns,
   headClassName,
@@ -20,7 +20,7 @@ export const TableHeader: React.FunctionComponent<IHeaderProps> = ({
   sortDesc,
   sortBy,
   onSortChange,
-}) => {
+}: IHeaderProps<TData> & { children?: React.ReactNode }) => {
   if (!visible) return <thead />;
   return (
     <thead className={headClassName}>

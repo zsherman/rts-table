@@ -1,23 +1,14 @@
 {
   "compilerOptions": {
-    "outDir": "build/lib",
+    "outDir": "dist/cjs",
     "module": "commonjs",
     "target": "es5",
-    "lib": [
-      "es5",
-      "es6",
-      "es7",
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "sourceMap": true,
     "allowJs": false,
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDirs": [
-      "src",
-      "stories"
-    ],
+    "rootDirs": ["src", "stories"],
     "baseUrl": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
@@ -31,10 +22,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": [
-    "src/**/*",
-    "types/**/*/"
-  ],
+  "include": ["src/**/*", "types/**/*/"],
   "exclude": [
     "node_modules",
     "build",

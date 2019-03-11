@@ -71,12 +71,12 @@ export class Table extends React.Component<ITableProps, ITableState> {
     currentPage: 1,
   };
 
-  public get pageCount() {
+  private get pageCount() {
     const { data, pageSize } = this.props;
     return Math.max(Math.round(data.length / pageSize), 1);
   }
 
-  public incrementPage = () => {
+  private incrementPage = () => {
     const { onPageChange, currentPage } = this.props;
 
     const nextPage =
@@ -88,7 +88,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
     }
   };
 
-  public decrementPage = () => {
+  private decrementPage = () => {
     const { onPageChange, currentPage } = this.props;
     const nextPage = currentPage !== 1 ? currentPage - 1 : currentPage;
     const pageChanged = nextPage !== currentPage;
@@ -98,7 +98,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
     }
   };
 
-  public handlePageClick = (page: number) => {
+  private handlePageClick = (page: number) => {
     const { onPageChange, currentPage } = this.props;
     const pageChanged = page !== currentPage;
     if (pageChanged && onPageChange) {
@@ -106,7 +106,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
     }
   };
 
-  public renderLoading() {
+  private renderLoading() {
     const { loader: CustomLoader } = this.props;
     if (CustomLoader) {
       return <CustomLoader />;

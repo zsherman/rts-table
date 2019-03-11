@@ -18,12 +18,12 @@ interface IHeadCellProps {
   onSortChange?: (sortBy: string, sortDesc: boolean) => any;
 }
 
-const TD = styled("td")`
+const TD = styled.td`
   text-align: left;
   padding: 10px;
 `;
 
-const TH = styled("th")`
+const TH = styled.th`
   text-align: left;
   font-weight: 600;
   padding: 10px;
@@ -71,8 +71,8 @@ export const HeadCell: React.FunctionComponent<IHeadCellProps> = ({
   };
   return (
     <TH className={className} onClick={sort}>
-      {sortBy === accessor && sortDesc && <span>▲</span>}
-      {sortBy === accessor && !sortDesc && <span>▼</span>}
+      {sortBy === accessor && sortDesc && <span>&#9650;</span>}
+      {sortBy === accessor && !sortDesc && <span>&#9660;</span>}
       {children}
     </TH>
   );

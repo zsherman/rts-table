@@ -1,6 +1,6 @@
 {
   "name": "rts-table",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Flexible table component built with Typescript and React.",
   "main": "dist/cjs/index.js",
   "module": "dist/es6/index.js",

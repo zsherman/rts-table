@@ -13,7 +13,7 @@
     "build:cjs": "tsc",
     "build:es6": "tsc -p tsconfig.es6.json",
     "build:stories": "rm -rf dist_stories && build-storybook -o dist_stories",
-    "build": "run-p build:*",
+    "build": "run-p build:cjs build:es6",
     "clean": "rimraf dist dist_stories",
     "start": "npm run build -- --watch",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",

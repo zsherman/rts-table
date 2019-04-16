@@ -60,6 +60,8 @@ export default class IApp extends React.Component<IAppProps, IAppState> {
         sortBy={sortBy}
         sortDesc={sortDesc}
         tableStyle={{ minHeight: 500 }}
+        height={500}
+        width={1000}
         loader={() => <Loader>Loading...</Loader>}
       />
     );

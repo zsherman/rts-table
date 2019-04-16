@@ -19,6 +19,9 @@ export interface ITableProps<TData extends object> {
   rowCellClassName?: string;
   headClassName?: string;
   headCellClassName?: string;
+  /* dimensions */
+  width: number;
+  height: number;
   /* custom styles */
   tableStyle?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
@@ -28,7 +31,8 @@ export interface ITableProps<TData extends object> {
   /* data */
   columns: Column<TData>[];
   data: TData[];
-  /* page */
+  /* pagination */
+  isPaginated: boolean;
   pageSize: number;
   currentPage: number;
   /* handlers */
@@ -42,7 +46,7 @@ export interface ITableProps<TData extends object> {
   sortDesc?: boolean;
   sortBy?: string;
   isLoading: boolean;
-  showPagination: boolean;
+  isVirtualized: boolean;
   showHeader: boolean;
 }
 
@@ -57,11 +61,12 @@ const defaultProps = {
   currentPage: 1,
   controlled: true,
   showHeader: true,
-  showPagination: true,
+  isPaginated: true,
   rowCellStyle: { borderBottom: "1px solid #eee" },
   columns: [],
   data: [],
   isLoading: false,
+  isVirtualized: false,
 };
 
 export class Table<TData extends object> extends React.Component<
@@ -126,6 +131,8 @@ export class Table<TData extends object> extends React.Component<
       tableClassName,
       tableStyle,
       containerStyle,
+      height,
+      width,
       headClassName,
       headCellClassName,
       rowClassName,
@@ -135,7 +142,7 @@ export class Table<TData extends object> extends React.Component<
       onSortChange,
       currentPage,
       pageSize,
-      showPagination,
+      isPaginated,
     } = this.props;
 
     return (
@@ -153,7 +160,10 @@ export class Table<TData extends object> extends React.Component<
           <TableBody
             visible={!isLoading}
             columns={columns}
+            height={height}
+            width={width}
             data={data}
+            isPaginated={isPaginated}
             pageSize={pageSize}
             currentPage={currentPage}
             rowClassName={rowClassName}
@@ -162,7 +172,7 @@ export class Table<TData extends object> extends React.Component<
         </table>
         {isLoading && this.renderLoading()}
         <Pagination
-          visible={showPagination && this.pageCount >= 1}
+          visible={isPaginated && this.pageCount >= 1}
           onNextPage={this.incrementPage}
           onPrevPage={this.decrementPage}
           onPageClick={this.handlePageClick}

@@ -1,11 +1,16 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+/* Helpers */
+import Code from "./Code";
+
 /* Example stories */
-import Controlled from "../examples/Controlled";
+import Pagination from "../examples/Pagination";
+import Virtualized from "../examples/Virtualized";
 
 /* Raw markup for demos */
-const ControlledCode = require("!raw-loader!../examples/Controlled.tsx");
+const PaginationCode = require("!raw-loader!../examples/Pagination.tsx");
+const VirtualizedCode = require("!raw-loader!../examples/Virtualized.tsx");
 
 /* Base styles */
 import "../src/style/style.css";
@@ -16,49 +21,24 @@ function cleanExample(str) {
     .replace(`<Debug />`, "");
 }
 
-const Code = props => (
-  <div
-    style={{
-      margin: "0 12px",
-      borderRadius: 4,
-      background: "#f6f8fa",
-      boxShadow: "0 0 1px  #eee inset"
-    }}
-  >
-    <div
-      style={{
-        textTransform: "uppercase",
-        fontSize: 11,
-        borderTopLeftRadius: 4,
-        borderTopRightRadius: 4,
-        fontWeight: 500,
-        padding: ".5rem",
-        background: "#555",
-        color: "#fff",
-        letterSpacing: "1px"
-      }}
-    >
-      Example Code
-    </div>
-    <pre
-      style={{
-        overflowX: "scroll",
-        fontSize: 11,
-        padding: ".5rem",
-        boxSizing: "border-box"
-      }}
-      {...props}
-    />
-  </div>
-);
-
-storiesOf("Table", module).add("Controlled", () => {
-  return (
-    <div>
-      <main>
-        <Controlled />
-      </main>
-      <Code>{cleanExample(ControlledCode)}</Code>
-    </div>
-  );
-});
+storiesOf("Table", module)
+  .add("Pagination", () => {
+    return (
+      <div>
+        <main>
+          <Pagination />
+        </main>
+        <Code>{cleanExample(PaginationCode)}</Code>
+      </div>
+    );
+  })
+  .add("Virtualized", () => {
+    return (
+      <div>
+        <main>
+          <Virtualized />
+        </main>
+        <Code>{cleanExample(VirtualizedCode)}</Code>
+      </div>
+    );
+  });

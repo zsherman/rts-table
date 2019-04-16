@@ -16,6 +16,7 @@ const messages = [
   "Log line aggregate completed in 79.620679ms, source_ids_json: [341]",
   "Log line aggregate completed in 225.87654ms",
 ];
+
 const levels = ["info", "error", "warn", "debug", "fatal"];
 
 export const data = new Array(50).fill(null).map(() => ({

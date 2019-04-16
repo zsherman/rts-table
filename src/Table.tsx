@@ -1,5 +1,6 @@
 /* NPM */
 import * as React from "react";
+import styled from "@emotion/styled";
 
 /* Types */
 import { Column } from "./types";
@@ -53,6 +54,8 @@ export interface ITableProps<TData extends object> {
 export interface ITableState {
   currentPage: number;
 }
+
+const TableContainer = styled.div``;
 
 const defaultProps = {
   className: "rts-table",
@@ -147,7 +150,7 @@ export class Table<TData extends object> extends React.Component<
 
     return (
       <Container style={containerStyle}>
-        <table className={tableClassName} style={tableStyle}>
+        <TableContainer className={tableClassName} style={tableStyle}>
           <TableHeader
             visible={showHeader}
             columns={columns}
@@ -156,6 +159,7 @@ export class Table<TData extends object> extends React.Component<
             sortDesc={sortDesc}
             sortBy={sortBy}
             onSortChange={onSortChange}
+            width={width}
           />
           <TableBody
             visible={!isLoading}
@@ -169,7 +173,7 @@ export class Table<TData extends object> extends React.Component<
             rowClassName={rowClassName}
             rowCellClassName={rowCellClassName}
           />
-        </table>
+        </TableContainer>
         {isLoading && this.renderLoading()}
         <Pagination
           visible={isPaginated && this.pageCount >= 1}

@@ -49,6 +49,14 @@ export const TableBody = <TData extends object>({
       width={width}
       itemSize={35}
       itemCount={window.length}
+      itemData={{
+        data,
+        columns,
+        rowCellClassName,
+        rowCellStyle,
+        rowStyle,
+        rowClassName,
+      }}
     >
       {Row}
     </FixedSizeList>

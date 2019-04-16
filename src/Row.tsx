@@ -1,11 +1,44 @@
 import * as React from "react";
+import styled from "@emotion/styled";
+import { RowCell } from "./Cell";
 import { ListChildComponentProps } from "react-window";
 
-// interface IRowProps {}
+const RowContainer = styled.div`
+  display: flex;
+`;
 
-export const Row: React.FunctionComponent<ListChildComponentProps> = ({
+interface IRowProps extends ListChildComponentProps {}
+
+export const Row: React.FunctionComponent<IRowProps> = ({
   index,
   style,
+  data,
 }) => {
-  return <div style={style}>Row {index}</div>;
+  const {
+    columns,
+    rowStyle,
+    rowClassName,
+    rowCellClassName,
+    rowCellStyle,
+  } = data;
+
+  return (
+    <RowContainer style={{ ...style, ...rowStyle }} className={rowClassName}>
+      {columns.map((c: any, idx: number) => (
+        <RowCell
+          key={`cell-${idx}`}
+          {...c}
+          datum={data.data[index]}
+          className={rowCellClassName}
+          style={{
+            ...rowCellStyle,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            width: `${Math.round((1 / columns.length) * 100)}%`,
+          }}
+        />
+      ))}
+    </RowContainer>
+  );
 };

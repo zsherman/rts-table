@@ -18,6 +18,7 @@ interface IBodyProps<TData extends object> {
   rowCellClassName?: string;
   rowStyle?: React.CSSProperties;
   rowCellStyle?: React.CSSProperties;
+  columnMinWidth: number;
 }
 
 export const TableBody = <TData extends object>({
@@ -33,6 +34,7 @@ export const TableBody = <TData extends object>({
   rowCellClassName,
   rowStyle,
   rowCellStyle,
+  columnMinWidth,
 }: IBodyProps<TData> & { children?: React.ReactNode }) => {
   if (!visible) return <tbody />;
 
@@ -56,6 +58,7 @@ export const TableBody = <TData extends object>({
         rowCellStyle,
         rowStyle,
         rowClassName,
+        columnMinWidth,
       }}
     >
       {Row}

@@ -23,6 +23,7 @@ export interface ITableProps<TData extends object> {
   /* dimensions */
   width: number;
   height: number;
+  columnMinWidth: number;
   /* custom styles */
   tableStyle?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
@@ -60,6 +61,7 @@ const TableContainer = styled.div``;
 const defaultProps = {
   className: "rts-table",
   pageSize: 10,
+  columnMinWidth: 100,
   sortable: true,
   currentPage: 1,
   controlled: true,
@@ -146,6 +148,7 @@ export class Table<TData extends object> extends React.Component<
       currentPage,
       pageSize,
       isPaginated,
+      columnMinWidth,
     } = this.props;
 
     return (
@@ -172,6 +175,7 @@ export class Table<TData extends object> extends React.Component<
             currentPage={currentPage}
             rowClassName={rowClassName}
             rowCellClassName={rowCellClassName}
+            columnMinWidth={columnMinWidth}
           />
         </TableContainer>
         {isLoading && this.renderLoading()}

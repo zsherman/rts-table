@@ -20,6 +20,7 @@ export const Row: React.FunctionComponent<IRowProps> = ({
     rowClassName,
     rowCellClassName,
     rowCellStyle,
+    columnMinWidth,
   } = data;
 
   return (
@@ -35,7 +36,8 @@ export const Row: React.FunctionComponent<IRowProps> = ({
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
-            width: `${Math.round((1 / columns.length) * 100)}%`,
+            minWidth: columnMinWidth,
+            // width: `${Math.round((1 / columns.length) * 100)}%`,
           }}
         />
       ))}

@@ -5,6 +5,8 @@ interface IData {
   dt: string;
   level: string;
   message: string;
+  email: string;
+  name: string;
   user: string;
 }
 
@@ -17,13 +19,31 @@ const messages = [
   "Log line aggregate completed in 225.87654ms",
 ];
 
+const emails = [
+  "zach@timber.io",
+  "shark@timber.io",
+  "jesse@timber.io",
+  "lee@timber.io",
+  "dylan@timber.io",
+];
+
+const names = [
+  "Zach Sherman",
+  "Shark Scorefin",
+  "Jesse Szwedko",
+  "Lee Benson",
+  "Dylan Fareed",
+];
+
 const levels = ["info", "error", "warn", "debug", "fatal"];
 
 export const data = new Array(50).fill(null).map(() => ({
   dt: new Date().toISOString(),
   level: levels[Math.floor(Math.random() * levels.length)],
   message: messages[Math.floor(Math.random() * messages.length)],
-  user: "zach@timber.io",
+  email: emails[Math.floor(Math.random() * emails.length)],
+  name: names[Math.floor(Math.random() * names.length)],
+  user: names[Math.floor(Math.random() * names.length)],
 }));
 
 export const columns: Column<IData>[] = [
@@ -40,8 +60,12 @@ export const columns: Column<IData>[] = [
     accessor: "message",
   },
   {
-    header: "User",
-    accessor: "user",
+    header: "Email",
+    accessor: "email",
+  },
+  {
+    header: "Name",
+    accessor: "name",
   },
   {
     header: "",

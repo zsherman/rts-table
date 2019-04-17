@@ -35,9 +35,8 @@ export default class IApp extends React.Component<IAppProps, IAppState> {
         isLoading={isLoading}
         isVirtualized
         isPaginated={false}
-        tableStyle={{ minHeight: 500 }}
         height={500}
-        width={1000}
+        width={600}
         loader={() => <Loader>Loading...</Loader>}
       />
     );
